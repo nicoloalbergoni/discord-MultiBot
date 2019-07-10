@@ -227,3 +227,7 @@ pip-selfcheck.json
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+
+### Personal ###
+secret.py
