@@ -1,28 +1,26 @@
-import discord
 from discord.ext import commands
 from secret import BOT_TOKEN
+import logging
+from Music import Music
 
-client = discord.Client()
+logging.basicConfig(level=logging.INFO,
+                    format='%(process)d-%(levelname)s-%(message)s')
+
 bot = commands.Bot(command_prefix='!')
 
 
-@client.event
+@bot.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
-
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+    logging.info(f'Logged in as {bot.user.name}')
 
 
 @bot.command()
-async def play(ctx, args):
-    print(args)
+async def test(ctx, url: str, time: str = None):
+    logging.info(
+        f'User {ctx.author.name} called the {ctx.command.name} command')
+    # channel = ctx.author.voice.channel
+    # vc = await channel.connect()
 
 
-client.run(BOT_TOKEN)
+bot.add_cog(Music(bot))
+bot.run(BOT_TOKEN)
