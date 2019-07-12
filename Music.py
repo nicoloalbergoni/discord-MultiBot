@@ -1,5 +1,6 @@
 from discord.ext import commands
 from YTDLSource import YTDLSource
+import logging
 
 
 class Music(commands.Cog):
@@ -9,6 +10,7 @@ class Music(commands.Cog):
     @commands.command()
     async def dc(self, ctx):
         """Stops and disconnects the bot from voice"""
+        logging.info(f'Disconnected from voice channel: {ctx.voice_client.channel.name}')
         await ctx.voice_client.disconnect()
 
     @commands.command()
