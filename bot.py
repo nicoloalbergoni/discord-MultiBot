@@ -1,17 +1,12 @@
 from discord.ext import commands
-from bot_logger import Logger
 from secret import BOT_TOKEN
-import logging
 from Music import Music
 
-logging.basicConfig(level=logging.MESSAGE,
-                  format='%(process)d-%(levelname)s-%(message)s')
+import logging
 
-logging.setLoggerClass(Logger)
-logger = logging.getLogger('Bot Logger')
-logger.message('This seems to work')
+logger = logging.getLogger(__name__)
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='?')
 
 
 @bot.event
@@ -27,5 +22,14 @@ async def test(ctx, url: str, time: str = None):
     # vc = await channel.connect()
 
 
-bot.add_cog(Music(bot))
-bot.run(BOT_TOKEN)
+def main():
+    logging.getLogger('discord').setLevel(logging.WARNING)
+    logging.basicConfig(format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                        level=logging.INFO)
+
+    bot.add_cog(Music(bot))
+    bot.run(BOT_TOKEN)
+
+
+if __name__ == "__main__":
+    main()
