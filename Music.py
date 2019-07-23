@@ -20,9 +20,10 @@ class Music(commands.Cog):
         else:
             await ctx.send('Not connected to any voice channel')
 
-    @commands.command(name='p')
+    @commands.command(name='p', aliases=['play'])
     async def play(self, ctx, *, url):
         """Streams from a url (same as yt, but doesn't predownload)"""
+
         logger.info(
             f'User {ctx.author.name} requested song: {url}')
         async with ctx.typing():
@@ -37,11 +38,10 @@ class Music(commands.Cog):
         if ctx.voice_client is None or not ctx.voice_client.is_playing():
             await ctx.send('No song is currently playing')
         else:
-            # TODO: fixare title attribute not found
-            ctx.voice_client.stop()
             logger.info(
                 f'{ctx.author.name} skipped song {ctx.voice_client.source.title}')
             await ctx.send(f'Skipped song: {ctx.voice_client.source.title}')
+            ctx.voice_client.stop()
 
     @commands.command(name='join')
     @play.before_invoke
